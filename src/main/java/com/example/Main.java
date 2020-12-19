@@ -26,6 +26,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static javax.measure.unit.SI.KILOGRAM;
+import javax.measure.quantity.Mass;
+import org.jscience.physics.model.RelativisticModel;
+import org.jscience.physics.amount.Amount;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -51,6 +56,18 @@ public class Main {
   @RequestMapping("/")
   String index() {
     return "index";
+  }
+
+  @RequestMapping("/hello")
+  String hello(Map<String, Object> model) {
+    RelativisticModel.select();
+    String energy = System.getenv().get("ENERGY");
+    if (energy == null) {
+       energy = "12 GeV";
+    }
+    Amount<Mass> m = Amount.valueOf(energy).to(KILOGRAM);
+    model.put("science", "E=mc^2: " + energy + " = "  + m.toString());
+    return "hello";
   }
 
   @RequestMapping("/db")
