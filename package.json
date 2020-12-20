@@ -1,0 +1,14 @@
+{
+  "name": "myapp",
+  "description": "a really cool app",
+  "version": "1.0.0",
+  "engines": {
+    "node": "12.x",
+    "yarn": "1.22.x"
+  },
+  "scripts": {
+    "build": "cd client && yarn install && yarn build",
+    "deploy": "cp -a client/build/. public/",
+    "heroku-postbuild": "yarn build && yarn deploy"
+  }
+}
